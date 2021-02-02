@@ -1,1 +1,2 @@
-# easyLearning_web
+# eLearning
+Веб-приложение обучающего сервиса
