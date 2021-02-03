@@ -44,14 +44,7 @@ const QuestionComponent = ({
 
   return (
     <div>
-      <Descriptions title={<Typography.Title>{info?.data}</Typography.Title>}>
-        {!!info?.description && (
-          <Descriptions.Item label="Комментарий">
-            {info?.description}
-          </Descriptions.Item>
-        )}
-        <Descriptions.Item label="Автор">kachmazoff</Descriptions.Item>
-      </Descriptions>
+      <Typography.Title>{info?.data}</Typography.Title>
       {/* <Typography.Title>{info?.data}</Typography.Title> */}
       {/* {!!info?.description && (
         <Typography.Text>{`Комментарий к вопросу:  ${info?.description}`}</Typography.Text>

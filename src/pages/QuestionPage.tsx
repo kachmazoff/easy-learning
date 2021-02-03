@@ -12,7 +12,6 @@ export const QuestionPage = ({ match }) => {
   const authState = useSelector(getAuthState);
   return (
     <BasePage>
-      {`Question ${questionId}`}
       <QuestionModule questionId={questionId} />
       <QuestionAnswers
         questionId={questionId}
