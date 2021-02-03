@@ -45,10 +45,9 @@ const QuestionComponent = ({
   return (
     <div>
       <Typography.Title>{info?.data}</Typography.Title>
-      {/* <Typography.Title>{info?.data}</Typography.Title> */}
-      {/* {!!info?.description && (
-        <Typography.Text>{`Комментарий к вопросу:  ${info?.description}`}</Typography.Text>
-      )} */}
+      {!!info?.description && (
+        <Typography.Paragraph>{info?.description}</Typography.Paragraph>
+      )}
     </div>
   );
 };
