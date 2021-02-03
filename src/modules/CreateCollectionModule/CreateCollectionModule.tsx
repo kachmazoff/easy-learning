@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { Modal, Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { ICollectionInfo } from "@/interfaces";
 import { CreateCollectionForm } from "./CreateCollectionForm";
 import { createCollection } from "./asyncActions";
+import { ButtonModal } from "@/components/ButtonModal";
 
 const mapDispatchToProps = {
   createCollection,
@@ -19,57 +19,41 @@ const defaultCollectionData: ICollectionInfo = {
   description: "",
 };
 
+const buttonText = [<PlusOutlined />, "Создать коллекцию"];
+
 const CreateCollectionComponent = ({
   createCollection,
 }: CreateCollectionProps): JSX.Element => {
-  const [visible, setVisible] = React.useState(false);
-  const [confirmLoading, setConfirmLoading] = useState(false);
+  const [disabled, setDisabled] = React.useState(false);
   const [collectionData, setCollectionData] = useState<ICollectionInfo>(
     defaultCollectionData
   );
 
-  const showModal = React.useCallback(() => {
-    setVisible(true);
-  }, []);
-
-  const handleOk = () => {
-    setConfirmLoading(true);
-    createCollection(collectionData).then(() => {
-      setVisible(false);
-      setConfirmLoading(false);
+  const onCloseHandler = async (closingType: "submit" | "cancel") => {
+    if (closingType === "submit") {
+      setDisabled(true);
+      await createCollection(collectionData);
+      setDisabled(false);
       setCollectionData(defaultCollectionData);
-    });
+    }
   };
 
-  const handleCancel = React.useCallback(() => {
-    setVisible(false);
-  }, []);
-
   return (
-    <>
-      <Button type="primary" onClick={showModal}>
-        <PlusOutlined />
-        Создать коллекцию
-      </Button>
-      <Modal
-        title="Создание коллекции"
-        visible={visible}
-        onOk={handleOk}
-        okText="Создать"
-        cancelText="Отменить"
-        confirmLoading={confirmLoading}
-        onCancel={handleCancel}
-        okButtonProps={{
-          disabled: !collectionData.title || !collectionData.description,
-        }}
-      >
-        <CreateCollectionForm
-          data={collectionData}
-          setData={setCollectionData}
-          disabled={confirmLoading}
-        />
-      </Modal>
-    </>
+    <ButtonModal
+      type="primary"
+      text={buttonText}
+      modalTitle="Создание коллекции"
+      okText="Создать"
+      cancelText="Отменить"
+      onClose={onCloseHandler}
+      okDisabled={!collectionData.title || !collectionData.description}
+    >
+      <CreateCollectionForm
+        data={collectionData}
+        setData={setCollectionData}
+        disabled={disabled}
+      />
+    </ButtonModal>
   );
 };
 
