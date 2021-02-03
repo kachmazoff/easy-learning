@@ -19,8 +19,8 @@ interface ButtonModalProps {
   okText?: React.ReactNode;
   cancelText?: React.ReactNode;
 
-  onOpen: () => void;
-  onClose: (type: ClosingType) => Promise<void>;
+  onOpen?: () => void;
+  onClose?: (type: ClosingType) => Promise<void>;
 }
 
 export const ButtonModal: FC<ButtonModalProps> = ({
@@ -38,19 +38,25 @@ export const ButtonModal: FC<ButtonModalProps> = ({
   const [confirmLoading, setConfirmLoading] = useState(false);
 
   const showModal = React.useCallback(() => {
-    onOpen();
+    if (!!onOpen) {
+      onOpen();
+    }
     setVisible(true);
   }, [onOpen]);
 
   const handleOk = React.useCallback(async () => {
     setConfirmLoading(true);
-    await onClose("submit");
+    if (!!onClose) {
+      await onClose("submit");
+    }
     setVisible(false);
     setConfirmLoading(false);
   }, [onClose]);
 
   const handleCancel = React.useCallback(async () => {
-    await onClose("cancel");
+    if (!!onClose) {
+      await onClose("cancel");
+    }
     setVisible(false);
   }, [onClose]);
 

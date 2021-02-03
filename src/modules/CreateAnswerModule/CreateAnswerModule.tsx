@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { Modal, Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { CreateAnswerForm } from "./CreateAnswerForm";
 import { createAnswer } from "./asyncActions";
 import { validateAnswerData } from "./helpers";
 import { AnswerFormData } from "./types";
+import { ButtonModal } from "@/components/ButtonModal";
 
 const mapDispatchToProps = {
   createAnswer,
@@ -21,58 +21,47 @@ const defaultAnswerData: AnswerFormData = {
   description: undefined,
 };
 
+const buttonText = (
+  <>
+    <PlusOutlined />
+    Добавить ответ
+  </>
+);
+
 const CreateAnswerComponent = ({
   questionId,
   createAnswer,
 }: CreateAnswerProps): JSX.Element => {
-  const [visible, setVisible] = React.useState(false);
-  const [confirmLoading, setConfirmLoading] = useState(false);
+  const [disabled, setDisabled] = React.useState(false);
   const [answerData, setAnswerData] = useState<AnswerFormData>(
     defaultAnswerData
   );
 
-  const showModal = React.useCallback(() => {
-    setVisible(true);
-  }, []);
-
-  const handleOk = () => {
-    setConfirmLoading(true);
-    createAnswer(questionId, answerData).then(() => {
-      setVisible(false);
-      setConfirmLoading(false);
+  const onCloseHandler = async (closingType: "submit" | "cancel") => {
+    if (closingType === "submit") {
+      setDisabled(true);
+      await createAnswer(questionId, answerData);
+      setDisabled(false);
       setAnswerData(defaultAnswerData);
-    });
+    }
   };
 
-  const handleCancel = React.useCallback(() => {
-    setVisible(false);
-  }, []);
-
   return (
-    <>
-      <Button type="primary" onClick={showModal}>
-        <PlusOutlined />
-        Добавить ответ
-      </Button>
-      <Modal
-        title="Создание ответа"
-        visible={visible}
-        onOk={handleOk}
-        okText="Создать"
-        cancelText="Отменить"
-        confirmLoading={confirmLoading}
-        onCancel={handleCancel}
-        okButtonProps={{
-          disabled: !validateAnswerData(answerData),
-        }}
-      >
-        <CreateAnswerForm
-          data={answerData}
-          setData={setAnswerData}
-          disabled={confirmLoading}
-        />
-      </Modal>
-    </>
+    <ButtonModal
+      type="primary"
+      text={buttonText}
+      modalTitle="Создание ответа"
+      okText="Создать"
+      cancelText="Отменить"
+      onClose={onCloseHandler}
+      okDisabled={!validateAnswerData(answerData)}
+    >
+      <CreateAnswerForm
+        data={answerData}
+        setData={setAnswerData}
+        disabled={disabled}
+      />
+    </ButtonModal>
   );
 };
 
