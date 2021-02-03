@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Typography } from "antd";
+import { Descriptions, Typography } from "antd";
 import { RootState } from "@/store";
 import { IQuestion } from "@/interfaces";
 import { getQuestionInfo } from "./asyncAction";
@@ -44,10 +44,18 @@ const QuestionComponent = ({
 
   return (
     <div>
-      <Typography.Title>{info?.data}</Typography.Title>
-      {!!info?.description && (
-        <Typography.Text>{info?.description}</Typography.Text>
-      )}
+      <Descriptions title={<Typography.Title>{info?.data}</Typography.Title>}>
+        {!!info?.description && (
+          <Descriptions.Item label="Комментарий">
+            {info?.description}
+          </Descriptions.Item>
+        )}
+        <Descriptions.Item label="Автор">kachmazoff</Descriptions.Item>
+      </Descriptions>
+      {/* <Typography.Title>{info?.data}</Typography.Title> */}
+      {/* {!!info?.description && (
+        <Typography.Text>{`Комментарий к вопросу:  ${info?.description}`}</Typography.Text>
+      )} */}
     </div>
   );
 };
