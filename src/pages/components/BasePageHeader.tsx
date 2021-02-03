@@ -19,12 +19,14 @@ export const BasePageHeader = ({ isAuthenticated }: BasePageHeaderProps) => (
         alignItems: "center",
       }}
     >
-      <Title
-        level={3}
-        style={{ color: "white", margin: "0", lineHeight: "64px" }}
-      >
-        eLearning
-      </Title>
+      <Link to="/">
+        <Title
+          level={3}
+          style={{ color: "white", margin: "0", lineHeight: "64px" }}
+        >
+          eLearning
+        </Title>
+      </Link>
       {!isAuthenticated && <Link to={"/login"}>Войти</Link>}
       {isAuthenticated && <AccountWidget />}
     </div>
