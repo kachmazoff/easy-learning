@@ -5,6 +5,7 @@ import { collectionSlice } from "./modules/CollectionModule";
 import { questionsListSlice } from "./modules/QuestionsListModule";
 import { authSlice } from "./modules/AuthModule";
 import { questionsSearchSlice } from "./modules/QuestionsSearchModule/reducer";
+import { questionSlice } from "./modules/QuestionModule";
 
 const reducer = combineReducers({
   [questionsListSlice.name]: questionsListSlice.reducer,
@@ -12,6 +13,7 @@ const reducer = combineReducers({
   [collectionSlice.name]: collectionSlice.reducer,
   [authSlice.name]: authSlice.reducer,
   [questionsSearchSlice.name]: questionsSearchSlice.reducer,
+  [questionSlice.name]: questionSlice.reducer,
 });
 
 export type RootState = ReturnType<typeof reducer>;
