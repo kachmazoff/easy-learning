@@ -1,18 +1,18 @@
 import { AxiosResponse } from "axios";
-import { IQuestion } from "@/interfaces";
+import { IQuestionExtended } from "@/interfaces";
 import { actions } from "./reducer";
 import { callApiGet } from "../ApiModule";
 
 export const getAllQuestions = () => (
   dispatch: Function
-): Promise<void | IQuestion[]> => {
+): Promise<void | IQuestionExtended[]> => {
   const { setList, setIsActual } = actions;
 
   return dispatch(callApiGet("/questions"))
     .then((response: AxiosResponse) => {
       dispatch(setList(response.data));
       dispatch(setIsActual(true));
-      return response.data as IQuestion[];
+      return response.data as IQuestionExtended[];
     })
     .catch((err) => {
       console.error(err);

@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IQuestion } from "@/interfaces";
+import { IQuestionExtended } from "@/interfaces";
 
 type QuestionsListState = {
-  questions: IQuestion[];
+  questions: IQuestionExtended[];
   isActual: boolean;
 };
 
@@ -15,7 +15,7 @@ export const questionsListSlice = createSlice({
   name: "questionsList",
   initialState,
   reducers: {
-    setList: (state, { payload }: PayloadAction<IQuestion[]>) => ({
+    setList: (state, { payload }: PayloadAction<IQuestionExtended[]>) => ({
       ...state,
       questions: payload,
     }),

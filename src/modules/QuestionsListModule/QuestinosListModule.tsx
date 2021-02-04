@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Card, List, Typography } from "antd";
-import { IQuestion } from "@/interfaces";
+import { Badge, Card, List, Typography } from "antd";
+import { IQuestionExtended } from "@/interfaces";
 import { RootState } from "@/store";
 import { getAllQuestions } from "./asyncActions";
 import { SelectAnswersForm } from "@/components/SelectAnswersForm";
@@ -20,18 +20,21 @@ const mapDispatchToProps = {
 //   typeof mapDispatchToProps;
 
 type QuestionsListComponentProps = {
-  questions: IQuestion[];
+  questions: IQuestionExtended[];
   isActual: boolean;
-  getAllQuestions: () => Promise<void | IQuestion[]>;
+  getAllQuestions: () => Promise<void | IQuestionExtended[]>;
 };
 
-const renderQuestionItem = (item: IQuestion) => (
+const renderQuestionItem = (item: IQuestionExtended) => (
   <List.Item>
     <List.Item.Meta
       // TODO: Аватар автора
       //   avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
       title={
-        <Link to={`/question/${item.id}`}>{item.data}</Link>
+        <>
+          {item.answers_count === 0 && <Badge status="error" />}
+          <Link to={`/question/${item.id}`}>{item.data}</Link>
+        </>
         // <a
         //   href={`https://google.gik-team.com/?q=${item.data}`}
         //   target="_blank"
@@ -71,11 +74,11 @@ const QuestionsListComponent = ({
           renderItem={renderQuestionItem}
         />
       </Card>
-      <SelectAnswersForm
+      {/* <SelectAnswersForm
         answers={questions}
         selected={selected}
         onChange={setSelected}
-      />
+      /> */}
     </div>
   );
 };
