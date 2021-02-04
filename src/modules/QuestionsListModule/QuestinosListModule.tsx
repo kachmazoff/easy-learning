@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Badge, Card, List, Typography } from "antd";
+import { Badge, Card, List, Tooltip, Typography } from "antd";
 import { IQuestionExtended } from "@/interfaces";
 import { RootState } from "@/store";
 import { getAllQuestions } from "./asyncActions";
@@ -32,7 +32,11 @@ const renderQuestionItem = (item: IQuestionExtended) => (
       //   avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
       title={
         <>
-          {item.answers_count === 0 && <Badge status="error" />}
+          {item.answers_count === 0 && (
+            <Tooltip title="Нет ни одного ответа">
+              <Badge status="error" />
+            </Tooltip>
+          )}
           <Link to={`/question/${item.id}`}>{item.data}</Link>
         </>
         // <a
