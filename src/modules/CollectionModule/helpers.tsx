@@ -14,16 +14,21 @@ export const listLocale = {
 
 export const questionsListRenderItem = (
   question: IQuestion,
-  onDelete: Function
+  onDelete: Function,
+  editable: boolean
 ) => (
   <List.Item
-    actions={[
-      <a key="list-loadmore-more" onClick={() => onDelete(question.id)}>
-        {/* <DeleteOutlined /> */}
-        {/* <DeleteFilled /> */}
-        удалить
-      </a>,
-    ]}
+    actions={
+      editable
+        ? [
+            <a key="list-loadmore-more" onClick={() => onDelete(question.id)}>
+              {/* <DeleteOutlined /> */}
+              {/* <DeleteFilled /> */}
+              удалить
+            </a>,
+          ]
+        : []
+    }
   >
     <List.Item.Meta title={question.data} description={question.description} />
   </List.Item>
