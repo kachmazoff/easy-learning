@@ -4,3 +4,7 @@ export interface ICollectionInfo {
   title: string;
   description: string;
 }
+
+export interface ICollectionInfoExtended {
+  questions_count: number;
+}

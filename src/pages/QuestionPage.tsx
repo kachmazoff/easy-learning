@@ -7,6 +7,7 @@ import { QuestionModule } from "@/modules/QuestionModule/QuestionModule";
 import { QuestionAnswers } from "@/modules/QuestionModule/QuestionAnswers";
 import { CreateAnswerModule } from "@/modules/CreateAnswerModule/CreateAnswerModule";
 import { BlockWrapper } from "@/components/BlockWrapper";
+import { QuestionModuleWrapper } from "@/modules/QuestionModule/QuestionModuleWrapper";
 
 export const QuestionPage = ({ match }) => {
   const questionId = match.params.id;
@@ -14,18 +15,20 @@ export const QuestionPage = ({ match }) => {
   const authState = useSelector(getAuthState);
   return (
     <BasePage>
-      <QuestionModule questionId={questionId} />
-      {isAuthenticated && (
-        <BlockWrapper>
-          <Space>
-            <CreateAnswerModule questionId={questionId} />
-          </Space>
-        </BlockWrapper>
-      )}
-      <QuestionAnswers
-        questionId={questionId}
-        activeUserId={authState.userData?.id}
-      />
+      <QuestionModuleWrapper questionId={questionId}>
+        <QuestionModule questionId={questionId} />
+        {isAuthenticated && (
+          <BlockWrapper>
+            <Space>
+              <CreateAnswerModule questionId={questionId} />
+            </Space>
+          </BlockWrapper>
+        )}
+        <QuestionAnswers
+          questionId={questionId}
+          activeUserId={authState.userData?.id}
+        />
+      </QuestionModuleWrapper>
     </BasePage>
   );
 };

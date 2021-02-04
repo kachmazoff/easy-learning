@@ -118,7 +118,9 @@ CollectionCardsModalProps): JSX.Element => {
           size="small"
           bordered
           dataSource={questions}
-          renderItem={(item) => questionsListRenderItem(item, onDelete)}
+          renderItem={(item) =>
+            questionsListRenderItem(item, onDelete, editable)
+          }
           locale={listLocale}
         />
       </Modal>

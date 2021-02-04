@@ -4,12 +4,16 @@ import { callApiGet } from "../ApiModule";
 import { actions } from "./reducer";
 
 export const getQuestionInfo = (questionId: string) => (dispatch: Function) => {
-  const { setQuestionInfo } = actions;
+  const { setQuestionInfo, setIsLoading } = actions;
+  dispatch(setIsLoading({ id: questionId, isLoading: true }));
   dispatch(callApiGet(`/questions/${questionId}`))
     .then((response: AxiosResponse) => {
       dispatch(setQuestionInfo(response.data as IQuestion));
+      dispatch(setIsLoading({ id: questionId, isLoading: false }));
     })
-    .catch(console.error);
+    .catch(() => {
+      dispatch(setIsLoading({ id: questionId, isLoading: false }));
+    });
 };
 
 export const getQuestionAnswers = (questionId: string) => (

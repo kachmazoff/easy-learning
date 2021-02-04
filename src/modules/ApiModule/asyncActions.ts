@@ -1,7 +1,7 @@
 import axios from "axios";
 import { RootState } from "@/store";
 
-const BASE_API_URL = "http://localhost:8000";
+const BASE_API_URL = process.env.BASE_API_URL;
 
 export const callApiGet = (endpoint: string) => (
   dispatch: Function,
