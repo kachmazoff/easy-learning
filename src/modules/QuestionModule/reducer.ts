@@ -4,6 +4,7 @@ import { IAnswer, IQuestion } from "@/interfaces";
 interface QuestionData {
   question: IQuestion;
   answers?: IAnswer[];
+  isLoading?: boolean;
 }
 
 interface QuestionState {
@@ -40,6 +41,21 @@ export const questionSlice = createSlice({
         [id]: {
           ...questionData,
           answers,
+        },
+      };
+    },
+    setIsLoading: (
+      state,
+      { payload }: PayloadAction<{ id: string; isLoading: boolean }>
+    ) => {
+      const { id, isLoading } = payload;
+      const questionData = state[id] || {};
+
+      return {
+        ...state,
+        [id]: {
+          ...questionData,
+          isLoading,
         },
       };
     },

@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Descriptions, Typography } from "antd";
+import { Typography } from "antd";
 import { RootState } from "@/store";
 import { IQuestion } from "@/interfaces";
 import { getQuestionInfo } from "./asyncAction";
