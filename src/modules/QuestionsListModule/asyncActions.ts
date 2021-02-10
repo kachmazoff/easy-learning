@@ -18,3 +18,19 @@ export const getAllQuestions = () => (
       console.error(err);
     });
 };
+
+export const getUnansweredQuestions = () => (
+  dispatch: Function
+): Promise<void | IQuestionExtended[]> => {
+  const { setList, setIsActual } = actions;
+
+  return dispatch(callApiGet("/questions/unanswered"))
+    .then((response: AxiosResponse) => {
+      dispatch(setList(response.data));
+      dispatch(setIsActual(true));
+      return response.data as IQuestionExtended[];
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+};
