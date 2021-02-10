@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Table } from "antd";
 import { RootState } from "@/store";
 import { IAnswer } from "@/interfaces";
-import { getQuestionAnswers } from "./asyncAction";
+import { getQuestionAnswers } from "./asyncActions";
 import { questionSlice } from "./reducer";
 import {
   AnswerTableData,
