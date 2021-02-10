@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { connect } from "react-redux";
 import { Result, Skeleton } from "antd";
 import { RootState } from "@/store";
-import { getQuestionInfo } from "./asyncAction";
+import { getQuestionInfo } from "./asyncActions";
 import { questionSlice } from "./reducer";
 
 const mapStateToProps = (

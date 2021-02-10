@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios";
 import { callApiPost } from "../ApiModule";
-import { getQuestionAnswers } from "../QuestionModule/asyncAction";
+import { getQuestionAnswers } from "../QuestionModule/asyncActions";
 import { AnswerFormData } from "./types";
 
 export const createAnswer = (

@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Layout, Typography } from "antd";
 import { AccountWidget } from "@/modules/AuthModule";
+import { DebugGridBreakpoints } from "@/components/DebugGridBreakpoints";
 
 const { Title } = Typography;
 const { Header } = Layout;
@@ -9,6 +10,8 @@ const { Header } = Layout;
 interface BasePageHeaderProps {
   isAuthenticated: boolean;
 }
+
+const isDebug = process.env.NODE_ENV === "development";
 
 export const BasePageHeader = ({ isAuthenticated }: BasePageHeaderProps) => (
   <Header>
@@ -27,6 +30,11 @@ export const BasePageHeader = ({ isAuthenticated }: BasePageHeaderProps) => (
           eLearning
         </Title>
       </Link>
+      {isDebug && (
+        <span style={{ color: "white" }}>
+          <DebugGridBreakpoints />
+        </span>
+      )}
       {!isAuthenticated && <Link to={"/login"}>Войти</Link>}
       {isAuthenticated && <AccountWidget />}
     </div>

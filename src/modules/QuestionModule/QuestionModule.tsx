@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Typography } from "antd";
 import { RootState } from "@/store";
 import { IQuestion } from "@/interfaces";
-import { getQuestionInfo } from "./asyncAction";
+import { getQuestionInfo } from "./asyncActions";
 import { questionSlice } from "./reducer";
 
 const mapStateToProps = (
