@@ -2,7 +2,7 @@ import React from "react";
 import { Provider } from "react-redux";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { Typography } from "antd";
-import { HomePage, LoginPage, RegistrationPage } from "./pages";
+import { HomePage, LoginPage, NotFoundPage, RegistrationPage } from "./pages";
 import { store } from "./store";
 import { AuthWrapper } from "./modules/AuthModule";
 import { QuestionPage } from "./pages/QuestionPage";
@@ -19,9 +19,7 @@ const App = () => {
             <Route path="/question/:id" exact component={QuestionPage} />
             <Route path="/registration" exact component={RegistrationPage} />
             <Route path="/" exact component={HomePage} />
-            <Route path="*">
-              <Title level={1}>404 page</Title>
-            </Route>
+            <Route path="*" component={NotFoundPage} />
           </Switch>
         </AuthWrapper>
       </BrowserRouter>
