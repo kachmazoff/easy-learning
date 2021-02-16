@@ -1,0 +1,13 @@
+.wrapper {
+    /* padding-top: 75%;  */
+    padding-top: 56.25%; 
+    position: relative;
+    margin: 10px;
+}
+
+.content {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+}
