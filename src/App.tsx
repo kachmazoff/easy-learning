@@ -1,7 +1,6 @@
 import React from "react";
 import { Provider } from "react-redux";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import { Typography } from "antd";
 import {
   CollectionsPage,
   HomePage,
@@ -14,8 +13,6 @@ import {
 import { store } from "./store";
 import { AuthWrapper } from "./modules/AuthModule";
 import { QuestionPage } from "./pages/QuestionPage";
-
-const { Title } = Typography;
 
 const App = () => {
   return (
