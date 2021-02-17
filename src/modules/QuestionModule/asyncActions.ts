@@ -20,7 +20,7 @@ export const getQuestionAnswers = (questionId: string) => (
   dispatch: Function
 ) => {
   const { setQuestionAnswers } = actions;
-  dispatch(callApiGet(`/questions/${questionId}/answers`))
+  dispatch(callApiGet(`/answers?questionId=${questionId}`))
     .then((response: AxiosResponse) => {
       dispatch(
         setQuestionAnswers({
