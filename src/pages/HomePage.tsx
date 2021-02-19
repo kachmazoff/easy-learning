@@ -7,13 +7,12 @@ import { CollectionsListModule } from "@/modules/CollectionsListModule";
 import { getIsAuthenticated } from "@/modules/AuthModule";
 import { QuestionsListModule } from "@/modules/QuestionsListModule";
 import { CreateQuestionModule } from "@/modules/CreateQuestionModule";
-import { BasePage } from "./components";
+import { ThreeColumnsLayout } from "./components";
 
 export const HomePage = () => {
   const isAuthenticated = useSelector(getIsAuthenticated);
   return (
-    <BasePage>
-      {/* <SelectAnswersForm answers={answers} /> */}
+    <ThreeColumnsLayout>
       {isAuthenticated && (
         <BlockWrapper>
           <Space>
@@ -28,6 +27,6 @@ export const HomePage = () => {
       <BlockWrapper>
         <QuestionsListModule />
       </BlockWrapper>
-    </BasePage>
+    </ThreeColumnsLayout>
   );
 };

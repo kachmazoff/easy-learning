@@ -2,7 +2,7 @@ import React from "react";
 import { Typography } from "antd";
 import { ResponsiveCalendar } from "@nivo/calendar";
 import { BlockWrapper } from "@/components/BlockWrapper";
-import { BasePage } from "./components";
+import { ThreeColumnsLayout } from "./components";
 
 export const StatisticsPage = () => {
   const [data, setData] = React.useState([]);
@@ -10,7 +10,6 @@ export const StatisticsPage = () => {
     fetch(process.env.BASE_API_URL + "/statistics")
       .then((x) => x.json())
       .then((x) => {
-        console.log(x);
         setData(
           x.total.map((stat) => ({
             value: stat.value,
@@ -21,7 +20,7 @@ export const StatisticsPage = () => {
   }, []);
 
   return (
-    <BasePage>
+    <ThreeColumnsLayout>
       <BlockWrapper>
         <Typography.Title>Статистика активности</Typography.Title>
       </BlockWrapper>
@@ -50,6 +49,6 @@ export const StatisticsPage = () => {
           ]}
         />
       </div>
-    </BasePage>
+    </ThreeColumnsLayout>
   );
 };

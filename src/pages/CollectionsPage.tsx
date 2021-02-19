@@ -5,12 +5,12 @@ import { BlockWrapper } from "@/components/BlockWrapper";
 import { CreateCollectionModule } from "@/modules/CreateCollectionModule";
 import { CollectionsListModule } from "@/modules/CollectionsListModule";
 import { getIsAuthenticated } from "@/modules/AuthModule";
-import { BasePage } from "./components";
+import { ThreeColumnsLayout } from "./components";
 
 export const CollectionsPage = () => {
   const isAuthenticated = useSelector(getIsAuthenticated);
   return (
-    <BasePage>
+    <ThreeColumnsLayout>
       {isAuthenticated && (
         <BlockWrapper>
           <Space>
@@ -21,6 +21,6 @@ export const CollectionsPage = () => {
       <BlockWrapper>
         <CollectionsListModule />
       </BlockWrapper>
-    </BasePage>
+    </ThreeColumnsLayout>
   );
 };
