@@ -3,6 +3,7 @@ import { Button, Form, Input } from "antd";
 import { SingleFileInput } from "../SingleFileInput";
 
 export interface CollectionFormData {
+  id?: string;
   title: string;
   description: string;
   cover?: string | File;
@@ -26,6 +27,9 @@ export const CollectionForm = ({
     onFinish={onFinish}
     initialValues={initialValues}
   >
+    <Form.Item name="id" noStyle>
+      <Input type="hidden" />
+    </Form.Item>
     <Form.Item label="Обложка" name="cover" rules={[{ required: false }]}>
       <SingleFileInput placeholder="Выберите обложку" />
     </Form.Item>
