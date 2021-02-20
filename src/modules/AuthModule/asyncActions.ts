@@ -1,8 +1,8 @@
-import axios, { AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
 import { callApiGet, callApiPost } from "../ApiModule";
 import { parseJwt } from "./helpers";
 import { actions, IAuthUserData, AuthStatus } from "./reducer";
-import { ILoginFormData } from "./types";
+import { ILoginFormData, IRegistrationFormData } from "./types";
 
 // TODO: переделать (localStorage / sessionStorage в зависимости от 'запимнить'/'нет' на форме авторизации)
 
@@ -13,6 +13,12 @@ const extractUserData = (token: string): IAuthUserData => {
     id: parsedPayload.userId as string,
   };
   return userData;
+};
+
+export const registration = (registrationFormData: IRegistrationFormData) => (
+  dispatch: Function
+) => {
+  return dispatch(callApiPost("/auth/registration", registrationFormData));
 };
 
 export const getToken = (loginFormData: ILoginFormData) => (
