@@ -49,3 +49,8 @@ span.avatar {
 .editButton:hover {
     color: #323ebe;
 }
+
+.link {
+    color: black;
+    transition: 0.1s;
+}

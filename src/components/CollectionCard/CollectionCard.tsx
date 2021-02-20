@@ -9,22 +9,24 @@ import styles from "./styles.module.css";
 interface CollectionCardProps {
   title: string;
   link?: string;
-  imageUrl?: string;
+  coverUrl?: string;
+  editLink?: string;
+  hideCover?: boolean;
 }
 
 export const CollectionCard = ({
   title,
   link,
-  imageUrl,
+  hideCover,
+  coverUrl,
+  editLink,
 }: CollectionCardProps) => {
-  let censured = title;
-  censured = censured.replace("пидОра", "#");
   return (
     <StyledCard>
-      {!!imageUrl && (
+      {!!coverUrl && !hideCover && (
         <div
           className={styles.cover}
-          style={{ backgroundImage: `url(${imageUrl})` }}
+          style={{ backgroundImage: `url(${coverUrl})` }}
         />
       )}
       <div className={styles.wrapper}>
@@ -32,10 +34,20 @@ export const CollectionCard = ({
           <span className={styles.author_info}>
             <span className={styles.avatar}></span>kachmazoff
           </span>
-          <EditOutlined className={styles.editButton} />
+          {editLink && (
+            <Link to={editLink}>
+              <EditOutlined className={styles.editButton} />
+            </Link>
+          )}
         </div>
         <div className={styles.content}>
-          {!!link ? <Link to={link}>{censured}</Link> : censured}
+          {!!link ? (
+            <Link to={link} className={styles.link}>
+              {title}
+            </Link>
+          ) : (
+            title
+          )}
         </div>
       </div>
     </StyledCard>
