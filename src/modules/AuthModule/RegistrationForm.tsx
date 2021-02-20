@@ -1,9 +1,12 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { Form, Input, Tooltip, Checkbox, Button } from "antd";
+import { Form, Input, Tooltip, Checkbox, Button, message } from "antd";
 import { QuestionCircleOutlined } from "@ant-design/icons";
 import { formItemLayout } from "./formsMeta";
 import styles from "./LoginForm.module.css";
+import { registration } from "./asyncActions";
+import { IRegistrationFormData } from "./types";
 
 const tailFormItemLayout = {
   wrapperCol: {
@@ -18,20 +21,31 @@ const tailFormItemLayout = {
   },
 };
 
-export const RegistrationForm = () => {
-  const [form] = Form.useForm();
+const mapDispatchToProps = {
+  registration: registration,
+};
 
-  // TODO
-  const onFinish = (values) => {
-    console.log("Received values of form: ", values);
-  };
+export const RegistrationFormComponent = ({ registration }) => {
+  const [form] = Form.useForm();
+  const [submitDisabled, setSubmitDisabled] = React.useState(false);
+
+  const onSubmit = React.useCallback(
+    (formData: IRegistrationFormData) => {
+      setSubmitDisabled(true);
+      registration(formData)
+        .then(() => message.success("Вы успешно зарегистрировались"))
+        .catch(() => message.error("Что-то пошло не так :("))
+        .finally(() => setSubmitDisabled(false));
+    },
+    [registration]
+  );
 
   return (
     <Form
       {...formItemLayout}
       form={form}
       name="register"
-      onFinish={onFinish}
+      onFinish={onSubmit}
       scrollToFirstError
     >
       <Form.Item
@@ -58,6 +72,10 @@ export const RegistrationForm = () => {
           {
             required: true,
             message: "Пожалуйста, введите пароль!",
+          },
+          {
+            min: 4,
+            message: "Минимальная длина пароля 4 символа",
           },
         ]}
         hasFeedback
@@ -132,6 +150,7 @@ export const RegistrationForm = () => {
           type="primary"
           htmlType="submit"
           className={styles["login-form-button"]}
+          disabled={submitDisabled}
         >
           Зарегистрироваться
         </Button>
@@ -140,3 +159,8 @@ export const RegistrationForm = () => {
     </Form>
   );
 };
+
+export const RegistrationForm = connect(
+  null,
+  mapDispatchToProps
+)(RegistrationFormComponent);
