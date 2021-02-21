@@ -8,9 +8,6 @@ interface CollectionsListProps {
 
 // TODO
 
-const getImageUrl = (filename: string) =>
-  `http://localhost:8000/files/download?filename=${filename}`;
-
 export const CollectionsList = ({ collections }: CollectionsListProps) => {
   return (
     <>
@@ -18,12 +15,10 @@ export const CollectionsList = ({ collections }: CollectionsListProps) => {
         <CollectionCard
           key={collection.title}
           title={collection.title}
-          imageUrl={
-            !!collection.cover
-              ? getImageUrl(collection.cover as string)
-              : undefined
-          }
-          link=""
+          coverUrl={collection.cover as string}
+          hideCover
+          editLink={`/editCollection/${collection.id}`}
+          // link={`/editCollection/${collection.id}`}
         />
       ))}
     </>

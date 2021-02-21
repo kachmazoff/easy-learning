@@ -12,6 +12,9 @@ interface SingleFileInputState {
   file: string | null;
 }
 
+const getImageUrl = (filename: string) =>
+  `http://localhost:8000/files/download?filename=${filename}`;
+
 export class SingleFileInput extends React.Component<
   SingleFileInputProps,
   SingleFileInputState
@@ -53,7 +56,10 @@ export class SingleFileInput extends React.Component<
     }
 
     const imageSrc =
-      file || (typeof value === "string" ? value : URL.createObjectURL(value));
+      file ||
+      (typeof value === "string"
+        ? getImageUrl(value)
+        : URL.createObjectURL(value));
 
     return (
       <div style={{ position: "relative" }}>
