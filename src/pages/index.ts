@@ -5,3 +5,5 @@ export { NotFoundPage } from "./NotFoundPage";
 export { QuestionsPage } from "./QuestionsPage";
 export { CollectionsPage } from "./CollectionsPage";
 export { StatisticsPage } from "./StatisticsPage";
+export { CreateCollectionPage } from "./CreateCollectionPage";
+export { EditCollectionPage } from "./EditCollectionPage";

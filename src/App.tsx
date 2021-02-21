@@ -3,6 +3,7 @@ import { Provider } from "react-redux";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import {
   CollectionsPage,
+  EditCollectionPage,
   HomePage,
   LoginPage,
   NotFoundPage,
@@ -26,6 +27,11 @@ const App = () => {
             <Route path="/collections" component={CollectionsPage} />
             <Route path="/registration" exact component={RegistrationPage} />
             <Route path="/statistics" exact component={StatisticsPage} />
+            <Route
+              path="/editCollection/:id"
+              exact
+              component={EditCollectionPage}
+            />
             <Route path="/" exact component={HomePage} />
             <Route path="*" component={NotFoundPage} />
           </Switch>
