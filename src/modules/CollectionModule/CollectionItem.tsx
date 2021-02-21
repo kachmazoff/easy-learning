@@ -39,7 +39,7 @@ const mapStateToProps = (
 };
 
 const mapDispatchToProps = {
-  saveCollectionInfo: actions.saveCollectionInfo,
+  saveCollectionInfo: actions.setCollectionData,
 };
 
 type CollectionItemOwnProps = {

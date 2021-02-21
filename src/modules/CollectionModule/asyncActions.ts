@@ -1,19 +1,38 @@
 import { AxiosResponse } from "axios";
-import { ICard } from "@/interfaces";
+import { ICard, ICollectionInfo } from "@/interfaces";
 import { actions } from "./reducer";
 import { callApiDelete, callApiGet, callApiPost } from "../ApiModule";
 import { IQAPair } from "./types";
+import { uploadImages } from "@/utils/uploadImages";
 
-export const getCollectionQAs = (collectionId: string) => (
+export const getCollectionInfo = (id: string) => (
+  dispatch: Function
+): Promise<ICollectionInfo | undefined> => {
+  const { setCollectionData } = actions;
+
+  return dispatch(callApiGet(`/collections/${id}`))
+    .then((response: AxiosResponse) => {
+      const collectionInfo: ICollectionInfo = response.data;
+
+      dispatch(setCollectionData({ id, collectionInfo, isLoading: false }));
+
+      return collectionInfo;
+    })
+    .catch((err) => {
+      console.error(err);
+      dispatch(setCollectionData({ id, isLoading: false }));
+      return undefined;
+    });
+};
+
+export const getCollectionQAs = (id: string) => (
   dispatch: Function
 ): Promise<ICard[]> => {
-  const { setCollectionQAs } = actions;
+  const { setCollectionData } = actions;
 
-  return dispatch(callApiGet(`/collections/${collectionId}/qas`))
+  return dispatch(callApiGet(`/collections/${id}/qas`))
     .then((response: AxiosResponse) => {
-      dispatch(
-        setCollectionQAs({ collectionId, qaPairs: response.data || [] })
-      );
+      dispatch(setCollectionData({ id, qaPairs: response.data || [] }));
 
       return (response.data || []) as IQAPair[];
     })
@@ -53,15 +72,11 @@ export const addQuestionsToCollection = (
     });
 };
 
-export const getCollectionQuestions = (collectionId: string) => (
-  dispatch: Function
-) => {
-  const { setCollectionQuestions } = actions;
-  return dispatch(callApiGet(`/collections/${collectionId}/questions`))
+export const getCollectionQuestions = (id: string) => (dispatch: Function) => {
+  const { setCollectionData } = actions;
+  return dispatch(callApiGet(`/collections/${id}/questions`))
     .then((response: AxiosResponse) => {
-      dispatch(
-        setCollectionQuestions({ id: collectionId, questions: response.data })
-      );
+      dispatch(setCollectionData({ id, questions: response.data }));
     })
     .catch((err) => {
       console.error(err);
@@ -87,5 +102,32 @@ export const deleteQuestionFromCollection = (
     })
     .catch((err) => {
       console.error(err);
+    });
+};
+
+export const updateCollectionInfo = (newModel: ICollectionInfo) => async (
+  dispatch: Function
+): Promise<void> => {
+  const { cover } = newModel;
+  let coverGeneratedName = null;
+
+  if (!!cover && cover instanceof File) {
+    const response = await uploadImages({ cover });
+    if (response.data.status) {
+      coverGeneratedName = response.data.data.generatedName;
+    }
+  }
+
+  const totalModel = { ...newModel, cover: coverGeneratedName };
+
+  return dispatch(callApiPost(`/collections/${newModel.id}`, totalModel))
+    .then((response: AxiosResponse) => {
+      console.log(response);
+
+      //   return response.data as ICollectionInfo[];
+    })
+    .catch((err) => {
+      console.error(err);
+      //   dispatch(onLoadFail());
     });
 };

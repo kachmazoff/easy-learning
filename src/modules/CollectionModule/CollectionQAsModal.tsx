@@ -11,7 +11,6 @@ import {
   getCollectionQuestions,
   deleteQuestionFromCollection,
 } from "./asyncActions";
-import { CardsSelectionForm } from "../CardsModule/CardsSelectionForm";
 import { IQAPair } from "./types";
 import { QSearch } from "../QuestionsSearchModule/QSearch";
 import { IQuestion } from "@/interfaces";
