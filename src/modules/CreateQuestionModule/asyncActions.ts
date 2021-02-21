@@ -1,4 +1,3 @@
-import { AxiosResponse } from "axios";
 import { IQuestion } from "@/interfaces";
 import { callApiPost } from "../ApiModule";
 import { actions } from "../QuestionsListModule/reducer";
@@ -8,8 +7,8 @@ export const createQuestion = (newQuestion: IQuestion) => (
 ): Promise<void> => {
   const { setIsActual } = actions;
 
-  return dispatch(callApiPost("/questions", newQuestion))
-    .then((response: AxiosResponse) => {
+  return callApiPost("/questions", newQuestion)
+    .then(() => {
       dispatch(setIsActual(false));
     })
     .catch((err) => {

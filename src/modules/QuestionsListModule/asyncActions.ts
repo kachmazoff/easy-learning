@@ -8,7 +8,7 @@ export const getAllQuestions = () => (
 ): Promise<void | IQuestionExtended[]> => {
   const { setList, setIsActual } = actions;
 
-  return dispatch(callApiGet("/questions"))
+  return callApiGet("/questions")
     .then((response: AxiosResponse) => {
       dispatch(setList(response.data));
       dispatch(setIsActual(true));
@@ -24,7 +24,7 @@ export const getUnansweredQuestions = () => (
 ): Promise<void | IQuestionExtended[]> => {
   const { setList, setIsActual } = actions;
 
-  return dispatch(callApiGet("/questions/unanswered"))
+  return callApiGet("/questions/unanswered")
     .then((response: AxiosResponse) => {
       dispatch(setList(response.data));
       dispatch(setIsActual(true));

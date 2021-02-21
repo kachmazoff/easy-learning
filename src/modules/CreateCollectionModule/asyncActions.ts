@@ -1,4 +1,3 @@
-import { AxiosResponse } from "axios";
 import { ICollectionInfo } from "@/interfaces";
 import { actions } from "../CollectionsListModule/reducer";
 import { callApiPost } from "../ApiModule";
@@ -8,8 +7,8 @@ export const createCollection = (newCollection: ICollectionInfo) => (
 ): Promise<void> => {
   const { setIsActual } = actions;
 
-  return dispatch(callApiPost("/collections", newCollection))
-    .then((response: AxiosResponse) => {
+  return callApiPost("/collections", newCollection)
+    .then(() => {
       dispatch(setIsActual(false));
     })
     .catch((err) => {

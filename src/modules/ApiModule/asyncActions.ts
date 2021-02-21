@@ -1,54 +1,10 @@
 import axios from "axios";
-import { RootState } from "@/store";
 
-const BASE_API_URL = process.env.BASE_API_URL;
+export const callApiGet = (endpoint: string) => axios.get(`${endpoint}`);
 
-export const callApiGet = (endpoint: string) => (
-  dispatch: Function,
-  getState: () => RootState
-) => {
-  const {
-    auth: { token },
-  } = getState();
-  const headers = {};
+export const callApiPost = (endpoint: string, body?: any) =>
+  axios.post(`${endpoint}`, body);
 
-  if (!!token) {
-    headers.Authorization = `Bearer ${token}`;
-  }
-
-  return axios.get(`${BASE_API_URL}${endpoint}`, { headers });
-};
-
-export const callApiPost = (endpoint: string, body?: any) => (
-  dispatch: Function,
-  getState: () => RootState
-) => {
-  const {
-    auth: { token },
-  } = getState();
-
-  const headers = {};
-
-  if (!!token) {
-    headers.Authorization = `Bearer ${token}`;
-  }
-
-  return axios.post(`${BASE_API_URL}${endpoint}`, body, { headers });
-};
-
-export const callApiDelete = (endpoint: string, body?: any) => (
-  dispatch: Function,
-  getState: () => RootState
-) => {
-  const {
-    auth: { token },
-  } = getState();
-
-  const headers = {};
-
-  if (!!token) {
-    headers.Authorization = `Bearer ${token}`;
-  }
-
-  return axios.delete(`${BASE_API_URL}${endpoint}`, { headers, data: body });
+export const callApiDelete = (endpoint: string, body?: any) => {
+  return axios.delete(`${endpoint}`, { data: body });
 };
