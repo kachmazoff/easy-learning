@@ -14,7 +14,7 @@ export const SideNav = ({ routes }: SideNavProps) => {
   return (
     <nav>
       {routes.map((route) => (
-        <Link to={route.url} className={styles.link}>
+        <Link key={route.url} to={route.url} className={styles.link}>
           {route.label}
         </Link>
       ))}
