@@ -24,7 +24,6 @@ export const collectionSlice = createSlice({
         ...(state[id] || {}),
         ...rest,
       };
-      console.log(payload, newCollectionModel);
 
       return {
         ...state,
