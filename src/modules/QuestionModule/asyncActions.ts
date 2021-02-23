@@ -6,7 +6,7 @@ import { actions } from "./reducer";
 export const getQuestionInfo = (questionId: string) => (dispatch: Function) => {
   const { setQuestionInfo, setIsLoading } = actions;
   dispatch(setIsLoading({ id: questionId, isLoading: true }));
-  dispatch(callApiGet(`/questions/${questionId}`))
+  return callApiGet(`/questions/${questionId}`)
     .then((response: AxiosResponse) => {
       dispatch(setQuestionInfo(response.data as IQuestion));
       dispatch(setIsLoading({ id: questionId, isLoading: false }));
@@ -20,7 +20,7 @@ export const getQuestionAnswers = (questionId: string) => (
   dispatch: Function
 ) => {
   const { setQuestionAnswers } = actions;
-  dispatch(callApiGet(`/questions/${questionId}/answers`))
+  return callApiGet(`/answers?questionId=${questionId}`)
     .then((response: AxiosResponse) => {
       dispatch(
         setQuestionAnswers({

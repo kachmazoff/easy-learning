@@ -9,7 +9,7 @@ export const getAllCollections = () => (
   const { setList, setIsActual } = actions;
 
   //   dispatch(onLoadStart());
-  return dispatch(callApiGet("/collections"))
+  return callApiGet("/collections")
     .then((response: AxiosResponse) => {
       dispatch(setList(response.data));
       dispatch(setIsActual(true));

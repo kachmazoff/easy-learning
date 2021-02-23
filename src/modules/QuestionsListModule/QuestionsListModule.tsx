@@ -6,6 +6,7 @@ import { RootState } from "@/store";
 import { getAllQuestions } from "./asyncActions";
 import { SelectAnswersForm } from "@/components/SelectAnswersForm";
 import { Link } from "react-router-dom";
+import { StyledCard } from "@/components/StyledCard";
 
 const mapStateToProps = (rootState: RootState) => ({
   questions: rootState.questionsList.questions,
@@ -70,14 +71,17 @@ const QuestionsListComponent = ({
     <div>
       <Typography.Title level={3}>Список вопросов</Typography.Title>
 
-      <Card bordered size="small">
+      {/* <StyledCard> */}
+      <StyledCard style={{ padding: "8px 0" }}>
+        {/* <Card bordered size="small"> */}
         <List
           size="small"
           itemLayout="horizontal"
           dataSource={questions}
           renderItem={renderQuestionItem}
         />
-      </Card>
+        {/* </Card> */}
+      </StyledCard>
       {/* <SelectAnswersForm
         answers={questions}
         selected={selected}

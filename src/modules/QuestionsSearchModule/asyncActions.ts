@@ -15,7 +15,7 @@ export const qSearchQuery = (query: string, name: string) => (
     return;
   }
 
-  dispatch(callApiGet("/questions/search?query=" + query))
+  return callApiGet("/questions/search?query=" + query)
     .then((response: AxiosResponse) => {
       dispatch(setQuestions({ data: response.data, name, userId }));
     })

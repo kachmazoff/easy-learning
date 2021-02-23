@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Result, Skeleton } from "antd";
 import { RootState } from "@/store";
 import { collectionSlice } from "./reducer";
-import { getCollectionQuestions } from "./asyncActions";
+import { getCollectionInfo } from "./asyncActions";
 
 const mapStateToProps = (
   rootState: RootState,
@@ -13,16 +13,14 @@ const mapStateToProps = (
   const collectionData = rootState[collectionSlice.name][collectionId];
 
   return {
-    // TODO: корректно ли проверять существование через поле questions?
-    exist: !!collectionData?.questions,
+    exist: !!collectionData?.collectionInfo,
     needInit: !collectionData,
     isLoading: !!collectionData?.isLoading,
   };
 };
 
-// TODO: корректно ли инициализировать state этим запросом?
 const mapDispatchToProps = {
-  initCollection: getCollectionQuestions,
+  initCollection: getCollectionInfo,
 };
 
 interface CollectionWrapperOwnProps {
@@ -61,12 +59,18 @@ const CollectionWrapperComponent: FC<CollectionWrapperProps> = ({
       <Result
         status="404"
         title="404"
-        subTitle="Похоже, такого вопроса не существует"
+        subTitle="Похоже, такой коллекции не существует"
       />
     );
   }
 
-  return <>{children}</>;
+  return (
+    <>
+      {React.Children.map(children, (child) =>
+        React.cloneElement(child, { collectionId })
+      )}
+    </>
+  );
 };
 
 export const CollectionModuleWrapper = connect(

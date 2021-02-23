@@ -1,6 +1,5 @@
-import { ICollectionInfo, IQuestion } from "@/interfaces";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ICollectionFull, IQAPair } from "./types";
+import { ICollectionFull } from "./types";
 
 export interface CollectionState {
   [collectionId: string]: ICollectionFull;
@@ -8,52 +7,24 @@ export interface CollectionState {
 
 const initialState: CollectionState = {};
 
-type CommonPayloadType = {
-  collectionId: string;
-};
-
-interface SaveCollectionInfoPayload {
+interface SetCollectionDataPayload extends Partial<ICollectionFull> {
   id: string;
-  collectionInfo: ICollectionInfo;
-}
-
-interface SetCollectionQuestionsPayload {
-  id: string;
-  questions: IQuestion[];
 }
 
 export const collectionSlice = createSlice({
   name: "collection",
   initialState,
   reducers: {
-    setCollectionQAs: (
+    setCollectionData: (
       state,
-      { payload }: PayloadAction<CommonPayloadType & { qaPairs: IQAPair[] }>
+      { payload }: PayloadAction<SetCollectionDataPayload>
     ) => {
-      const { collectionId, qaPairs } = payload;
-      const newCollectionModel = { ...(state[collectionId] || {}), qaPairs };
-      return {
-        ...state,
-        [collectionId]: newCollectionModel,
+      const { id, ...rest } = payload;
+      const newCollectionModel: ICollectionFull = {
+        ...(state[id] || {}),
+        ...rest,
       };
-    },
-    saveCollectionInfo: (
-      state,
-      { payload }: PayloadAction<SaveCollectionInfoPayload>
-    ) => {
-      const { id, collectionInfo } = payload;
-      const newCollectionModel = { ...(state[id] || {}), collectionInfo };
-      return {
-        ...state,
-        [id]: newCollectionModel,
-      };
-    },
-    setCollectionQuestions: (
-      state,
-      { payload }: PayloadAction<SetCollectionQuestionsPayload>
-    ) => {
-      const { id, questions } = payload;
-      const newCollectionModel = { ...(state[id] || {}), questions };
+
       return {
         ...state,
         [id]: newCollectionModel,

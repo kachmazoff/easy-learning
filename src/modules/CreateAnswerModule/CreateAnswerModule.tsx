@@ -21,7 +21,7 @@ const defaultAnswerData: AnswerFormData = {
   description: undefined,
 };
 
-const buttonText = [<PlusOutlined />, "Добавить ответ"];
+const buttonText = "Добавить ответ";
 
 const CreateAnswerComponent = ({
   questionId,

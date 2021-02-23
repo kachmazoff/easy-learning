@@ -5,12 +5,12 @@ import { BlockWrapper } from "@/components/BlockWrapper";
 import { getIsAuthenticated } from "@/modules/AuthModule";
 import { QuestionsListModule } from "@/modules/QuestionsListModule";
 import { CreateQuestionModule } from "@/modules/CreateQuestionModule";
-import { BasePage } from "./components";
+import { ThreeColumnsLayout } from "./components";
 
 export const QuestionsPage = () => {
   const isAuthenticated = useSelector(getIsAuthenticated);
   return (
-    <BasePage>
+    <ThreeColumnsLayout>
       {isAuthenticated && (
         <BlockWrapper>
           <Space>
@@ -21,6 +21,6 @@ export const QuestionsPage = () => {
       <BlockWrapper>
         <QuestionsListModule />
       </BlockWrapper>
-    </BasePage>
+    </ThreeColumnsLayout>
   );
 };

@@ -1,0 +1,13 @@
+.link {
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    padding: 0.5rem;
+    font-size: 1rem;
+    color: #202428;
+}
+
+.link:hover {
+    background: rgba(8, 9, 10, 0.05);
+    color: #323ebe;
+}

@@ -1,9 +1,10 @@
 import React from "react";
 import { Provider } from "react-redux";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import { Typography } from "antd";
 import {
   CollectionsPage,
+  CreateCollectionPage,
+  EditCollectionPage,
   HomePage,
   LoginPage,
   NotFoundPage,
@@ -14,8 +15,6 @@ import {
 import { store } from "./store";
 import { AuthWrapper } from "./modules/AuthModule";
 import { QuestionPage } from "./pages/QuestionPage";
-
-const { Title } = Typography;
 
 const App = () => {
   return (
@@ -29,6 +28,16 @@ const App = () => {
             <Route path="/collections" component={CollectionsPage} />
             <Route path="/registration" exact component={RegistrationPage} />
             <Route path="/statistics" exact component={StatisticsPage} />
+            <Route
+              path="/editCollection/:id"
+              exact
+              component={EditCollectionPage}
+            />
+            <Route
+              path="/createCollection"
+              exact
+              component={CreateCollectionPage}
+            />
             <Route path="/" exact component={HomePage} />
             <Route path="*" component={NotFoundPage} />
           </Switch>

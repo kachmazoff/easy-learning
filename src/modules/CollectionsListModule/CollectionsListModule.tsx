@@ -1,14 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Empty, Typography } from "antd";
+import { Empty } from "antd";
 import { ICollectionInfo } from "@/interfaces";
 import { RootState } from "@/store";
 import { getAllCollections } from "./asyncActions";
-import { CollectionItem } from "@/modules/CollectionModule";
+import { CollectionsList } from "@/components/CollectionsList";
 
 const mapStateToProps = (rootState: RootState) => ({
   collections: rootState.collectionsList.collections,
   isActual: rootState.collectionsList.isActual,
+  activeUserId: rootState?.auth?.userData?.id,
 });
 
 const mapDispatchToProps = {
@@ -18,12 +19,14 @@ const mapDispatchToProps = {
 type CollectionsListComponentProps = {
   collections: ICollectionInfo[];
   isActual: boolean;
+  activeUserId?: string;
   getAllCollections: () => Promise<void | ICollectionInfo[]>;
 };
 
 const CollectionsListComponent = ({
   collections,
   isActual,
+  activeUserId,
   getAllCollections,
 }: CollectionsListComponentProps) => {
   React.useEffect(() => {
@@ -31,21 +34,21 @@ const CollectionsListComponent = ({
       getAllCollections();
     }
   }, [isActual]);
+
+  const checkingEditAccess = React.useCallback(
+    (collection) => collection.author_id === activeUserId,
+    [activeUserId]
+  );
+
+  if (!collections || collections.length === 0) {
+    return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />;
+  }
+
   return (
-    <div>
-      <Typography.Title level={3}>Список коллекций</Typography.Title>
-      {(!collections || collections.length === 0) && (
-        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
-      )}
-      {collections?.map((collection) => (
-        <CollectionItem
-          key={collection.title}
-          collectionInfo={collection}
-          // title={collection.title}
-          // description={collection.description}
-        />
-      ))}
-    </div>
+    <CollectionsList
+      collections={collections}
+      checkingEditAccess={checkingEditAccess}
+    />
   );
 };
 

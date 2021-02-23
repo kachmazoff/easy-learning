@@ -42,7 +42,7 @@ const AccountWidgetComponent = ({ username, onLogout }: AccountWidgetProps) => {
     >
       <Space style={{ cursor: "pointer" }}>
         <Avatar icon={<UserOutlined />} />
-        <Typography.Text style={{ color: "white" }}>root</Typography.Text>
+        <Typography.Text style={{ color: "white" }}>{username}</Typography.Text>
       </Space>
     </Popover>
   );
