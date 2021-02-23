@@ -10,4 +10,5 @@ export interface ICollectionFull {
   qaPairs?: IQAPair[];
   questions?: IQuestion[];
   isLoading?: boolean;
+  isActual?: boolean;
 }

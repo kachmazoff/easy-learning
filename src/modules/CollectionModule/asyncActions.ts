@@ -1,18 +1,20 @@
 import { AxiosError, AxiosResponse } from "axios";
+import { collectionApi, filesApi } from "@/api";
+import { CollectionFormData } from "@/components/CollectionForm";
 import { ICard, ICollectionInfo } from "@/interfaces";
 import { actions } from "./reducer";
 import { callApiDelete, callApiGet, callApiPost } from "../ApiModule";
 import { IQAPair } from "./types";
-import { uploadImages } from "@/utils/uploadImages";
-import { CollectionFormData } from "@/components/CollectionForm";
+import { ICreateCollectionDTO, IUpdateCollectionDTO } from "@/api/types";
 
 export const getCollectionInfo = (id: string) => (
   dispatch: Function
 ): Promise<ICollectionInfo | undefined> => {
   const { setCollectionData } = actions;
 
-  return callApiGet(`/collections/${id}`)
-    .then((response: AxiosResponse) => {
+  return collectionApi
+    .getInfo(id)
+    .then((response) => {
       const collectionInfo: ICollectionInfo = response.data;
 
       dispatch(setCollectionData({ id, collectionInfo, isLoading: false }));
@@ -97,34 +99,36 @@ export const deleteQuestionFromCollection = (
       console.error(err);
     });
 
+const fileHandler = async (file: File | string | undefined) => {
+  if (file instanceof File) {
+    const response = await filesApi.upload(file);
+    if (response.data.status) {
+      return response.data.data.generatedName;
+    }
+  } else {
+    return file;
+  }
+};
+
 export const updateCollectionInfo = (
   newModel: CollectionFormData
-) => async (): Promise<void> => {
-  const { cover } = newModel;
-  let coverGeneratedName = null;
+) => async () => {
+  const dto: IUpdateCollectionDTO = {
+    id: newModel.id as string,
+    title: newModel.title,
+    description: newModel.description,
+    cover: await fileHandler(newModel.cover),
+  };
 
-  if (!!cover && cover instanceof File) {
-    const response = await uploadImages({ cover });
-    if (response.data.status) {
-      coverGeneratedName = response.data.data.generatedName;
-    }
-  }
+  return collectionApi.update(dto);
+};
 
-  const totalModel = { ...newModel, cover: coverGeneratedName };
+export const createCollection = (newModel: CollectionFormData) => async () => {
+  const dto: ICreateCollectionDTO = {
+    title: newModel.title,
+    description: newModel.description,
+    cover: await fileHandler(newModel.cover),
+  };
 
-  return callApiPost(`/collections/${newModel.id}`, totalModel)
-    .then((response: AxiosResponse) => {
-      console.log(response);
-      //   return response.data as ICollectionInfo[];
-    })
-    .catch((err: AxiosError) => {
-      const status = err.response?.status;
-      let errorMesage = "Что-то пошло не так";
-
-      if (status === 401 || status === 403) {
-        errorMesage = "Вам нельзя редактировать эту коллекцию";
-      }
-      //   dispatch(onLoadFail());
-      return Promise.reject(errorMesage);
-    });
+  return collectionApi.create(dto);
 };

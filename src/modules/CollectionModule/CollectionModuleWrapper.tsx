@@ -64,7 +64,13 @@ const CollectionWrapperComponent: FC<CollectionWrapperProps> = ({
     );
   }
 
-  return <>{children}</>;
+  return (
+    <>
+      {React.Children.map(children, (child) =>
+        React.cloneElement(child, { collectionId })
+      )}
+    </>
+  );
 };
 
 export const CollectionModuleWrapper = connect(
