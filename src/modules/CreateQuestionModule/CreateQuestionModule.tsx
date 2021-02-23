@@ -20,7 +20,7 @@ const defaultQuestionData: IQuestion = {
   description: undefined,
 };
 
-const buttonText = [<PlusOutlined />, "Создать вопрос"];
+const buttonText = "Создать вопрос";
 
 const CreateQuestionComponent = ({
   createQuestion,
