@@ -1,31 +1,34 @@
 import React from "react";
-import axios from "axios";
+import { useDispatch } from "react-redux";
+import { RouteComponentProps } from "react-router-dom";
+import { message } from "antd";
+
+import { CollectionFormModule } from "@/modules/CollectionModule";
+import { actions as listActions } from "@/modules/CollectionsListModule";
 import { ThreeColumnsLayout } from "./components";
-import { CollectionForm } from "@/components/CollectionForm";
-import { uploadImages } from "@/utils/uploadImages";
 
-const onCreateCollection = async ({ cover, ...model }) => {
-  let coverGeneratedName = null;
-
-  if (!!cover) {
-    const response = await uploadImages({ cover });
-    if (response.data.status) {
-      coverGeneratedName = response.data.data.generatedName;
-    }
-  }
-
-  const totalModel = { ...model, cover: coverGeneratedName };
-
-  axios.post("http://localhost:8000/collections", totalModel, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-  });
+const onFailedHandler = () => {
+  message.error("Что-то пошло не так :(");
 };
 
-export const CreateCollectionPage = ({}) => (
-  <ThreeColumnsLayout>
-    <h1>Создание курса</h1>
-    <CollectionForm onFinish={onCreateCollection} />
-  </ThreeColumnsLayout>
-);
+export const CreateCollectionPage = ({ history }: RouteComponentProps) => {
+  const dispatch = useDispatch();
+
+  const onSuccessHanlder = React.useCallback(() => {
+    dispatch(listActions.setIsActual(false));
+    message.success("Коллекция успешно создана");
+  }, [dispatch]);
+
+  const onFinishHandler = React.useCallback(() => history.push("/"), [history]);
+
+  return (
+    <ThreeColumnsLayout>
+      <h1>Создание коллекции</h1>
+      <CollectionFormModule
+        onSuccess={onSuccessHanlder}
+        onFailed={onFailedHandler}
+        onFinish={onFinishHandler}
+      />
+    </ThreeColumnsLayout>
+  );
+};

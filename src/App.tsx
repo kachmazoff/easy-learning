@@ -3,6 +3,7 @@ import { Provider } from "react-redux";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import {
   CollectionsPage,
+  CreateCollectionPage,
   EditCollectionPage,
   HomePage,
   LoginPage,
@@ -31,6 +32,11 @@ const App = () => {
               path="/editCollection/:id"
               exact
               component={EditCollectionPage}
+            />
+            <Route
+              path="/createCollection"
+              exact
+              component={CreateCollectionPage}
             />
             <Route path="/" exact component={HomePage} />
             <Route path="*" component={NotFoundPage} />
