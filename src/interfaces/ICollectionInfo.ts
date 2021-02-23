@@ -3,7 +3,7 @@ export interface ICollectionInfo {
   author_id: string;
   title: string;
   description: string;
-  cover?: string | File;
+  cover?: string;
 }
 
 export interface ICollectionInfoExtended {

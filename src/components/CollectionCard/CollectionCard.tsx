@@ -12,7 +12,7 @@ interface CollectionCardProps {
   coverUrl?: string;
   editLink?: string;
   hideCover?: boolean;
-  canEdit: boolean;
+  canEdit?: boolean;
 }
 
 export const CollectionCard = ({
