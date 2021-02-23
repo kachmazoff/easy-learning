@@ -1,1 +1,0 @@
-export { CreateCollectionModule } from "./CreateCollectionModule";
