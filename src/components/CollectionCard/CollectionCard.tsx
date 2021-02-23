@@ -12,6 +12,7 @@ interface CollectionCardProps {
   coverUrl?: string;
   editLink?: string;
   hideCover?: boolean;
+  canEdit: boolean;
 }
 
 export const CollectionCard = ({
@@ -20,36 +21,35 @@ export const CollectionCard = ({
   hideCover,
   coverUrl,
   editLink,
-}: CollectionCardProps) => {
-  return (
-    <StyledCard>
-      {!!coverUrl && !hideCover && (
-        <div
-          className={styles.cover}
-          style={{ backgroundImage: `url(${coverUrl})` }}
-        />
-      )}
-      <div className={styles.wrapper}>
-        <div className={styles.header}>
-          <span className={styles.author_info}>
-            <span className={styles.avatar}></span>kachmazoff
-          </span>
-          {editLink && (
-            <Link to={editLink}>
-              <EditOutlined className={styles.editButton} />
-            </Link>
-          )}
-        </div>
-        <div className={styles.content}>
-          {!!link ? (
-            <Link to={link} className={styles.link}>
-              {title}
-            </Link>
-          ) : (
-            title
-          )}
-        </div>
+  canEdit,
+}: CollectionCardProps) => (
+  <StyledCard>
+    {!!coverUrl && !hideCover && (
+      <div
+        className={styles.cover}
+        style={{ backgroundImage: `url(${coverUrl})` }}
+      />
+    )}
+    <div className={styles.wrapper}>
+      <div className={styles.header}>
+        <span className={styles.author_info}>
+          <span className={styles.avatar}></span>kachmazoff
+        </span>
+        {canEdit && editLink && (
+          <Link to={editLink}>
+            <EditOutlined className={styles.editButton} />
+          </Link>
+        )}
       </div>
-    </StyledCard>
-  );
-};
+      <div className={styles.content}>
+        {!!link ? (
+          <Link to={link} className={styles.link}>
+            {title}
+          </Link>
+        ) : (
+          title
+        )}
+      </div>
+    </div>
+  </StyledCard>
+);
