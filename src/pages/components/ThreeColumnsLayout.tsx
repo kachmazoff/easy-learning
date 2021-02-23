@@ -12,11 +12,11 @@ const { Content } = Layout;
 
 const menuConfig = [
   { url: "/", label: "Главная" },
-  { url: "collections", label: "Коллекции" },
-  { url: "questions", label: "Вопросы" },
-  { url: "create/course", label: "Создать" },
-  { url: "statistics", label: "Статистика" },
-  { url: "6", label: "Профиль" },
+  { url: "/collections", label: "Коллекции" },
+  { url: "/questions", label: "Вопросы" },
+  { url: "/createCollection", label: "Создать" },
+  { url: "/statistics", label: "Статистика" },
+  { url: "/profile", label: "Профиль" },
 ];
 
 interface ThreeColumnsLayoutProps {
