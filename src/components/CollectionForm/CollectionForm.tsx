@@ -1,19 +1,7 @@
 import React from "react";
 import { Button, Form, Input } from "antd";
 import { SingleFileInput } from "../SingleFileInput";
-
-export interface CollectionFormData {
-  id?: string;
-  title: string;
-  description: string;
-  cover?: string | File;
-}
-
-interface CollectionFormProps {
-  initialValues?: CollectionFormData;
-  submitText?: string;
-  onFinish: (object: CollectionFormData) => void;
-}
+import { CollectionFormProps } from "./types";
 
 export const CollectionForm = ({
   initialValues,
